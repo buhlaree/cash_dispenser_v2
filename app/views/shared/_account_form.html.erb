@@ -1,0 +1,7 @@
+<%= form_for(@account) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <%= f.number_field :total, placeholder: "Enter initial deposit amount" %>
+  </div>
+  <%= f.submit "Deposit", class: "btn btn-primary" %>
+<% end %>

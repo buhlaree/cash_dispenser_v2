@@ -1,0 +1,7 @@
+<li id="account-<%= account.id %>">
+  <span class="user"><%= link_to account.user.name, account.user %></span>
+  <span class="total"><%= account.total %></span>
+  <span class="timestamp">
+    Opened <%= time_ago_in_words(account.created_at) %> ago.
+  </span>
+</li>

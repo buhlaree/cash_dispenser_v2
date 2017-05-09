@@ -1,0 +1,11 @@
+<%= form_for(@account, as: :account, url: account_path(@account), method: :patch) do |f| %>
+  <%= render 'shared/error_messages', object: f.object %>
+  <div class="field">
+    <%= f.select :id, @options %>
+<%#= f.select :id, @user.accounts.map {|a| [a.id,a.id] } %>
+    <%= f.label :total %><br>
+    <%= f.number_field :total %>
+
+  </div>
+  <%= f.submit "Deposit to Existing Account", class: "btn btn-primary" %>
+<% end %>

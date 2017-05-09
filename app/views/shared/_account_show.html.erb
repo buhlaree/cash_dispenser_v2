@@ -1,0 +1,10 @@
+<h1> Please select an account </h1>
+
+<ul class="accounts">
+    <% @account.each do |account| %>
+    <li>
+      Account <%= link_to account.id, account %>
+      $<%= account.total %>
+    </li>
+    <% end %>
+</ul>
