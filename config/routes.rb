@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
   get '/new_account', to: 'static_pages#new_account'
-  get '/transaction', to: 'transactions#new'
+  #get '/transaction', to: 'transactions#new'
+  #get '/transactions', to: 'transactions#show'
   resources :users
   resources :accounts #, only: [:create, :destroy, :update, :get]
   resources :transactions
