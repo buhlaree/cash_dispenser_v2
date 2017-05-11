@@ -13,25 +13,31 @@
       <strong>Transaction:</strong>
       <%= @transaction.id %>
     </p>
-
     <p>
       <strong>New account amount:</strong>
       <%= @transaction.account.total %>
     </p>
-
     <p>
       <strong>Transaction Amount:</strong>
       <%= @transaction.amount %>
     </p>
-
     <p>
       <strong>Account Owner</strong>
       <%= @transaction.account.user.name %>
     </p>
-
     <p>
       <strong>Account Number:</strong>
       <%= @transaction.account.id %>
     </p>
+
+    <p>
+      <strong>Type of Transaction:</strong>
+      <% if @transaction.deposit %>
+        Deposit
+      <% else %>
+        Withdrawal
+      <% end %>
+    </p>
+
   </div>
 </div>

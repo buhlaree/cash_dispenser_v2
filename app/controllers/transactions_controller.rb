@@ -24,11 +24,22 @@ class TransactionsController < ApplicationController
                     @transaction.account.total.to_i - @transaction.amount.to_i)
         end
     end
+
+    cash_symbol = CONFIG["CASHSYMBOL"]
+    bills_available = CONFIG["BILLS"]
+
+    puts cash_symbol
+    puts bills_available
     redirect_to @transaction
   end
 
   private
     def transaction_params
       params.require(:transaction).permit(:amount, :account_id, :deposit)
+    end
+
+    def dispense(total)
+      cash_symbol = CONFIG["CASHSYMBOL"]
+      bills_available = CONFIG["BILLS"]
     end
 end
