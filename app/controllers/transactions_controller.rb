@@ -25,11 +25,7 @@ class TransactionsController < ApplicationController
         end
     end
 
-    cash_symbol = CONFIG["CASHSYMBOL"]
-    bills_available = CONFIG["BILLS"]
-
-    puts cash_symbol
-    puts bills_available
+    dispense(@transaction.amount.to_i)
     redirect_to @transaction
   end
 
@@ -38,8 +34,36 @@ class TransactionsController < ApplicationController
       params.require(:transaction).permit(:amount, :account_id, :deposit)
     end
 
-    def dispense(total)
+    def dispense(original_request)
       cash_symbol = CONFIG["CASHSYMBOL"]
       bills_available = CONFIG["BILLS"]
+            bills = {}
+            session_hash = {}
+            session_hash[:original_request] = original_request
+            left_over = bills_available
+
+            bills_available.each do |bill_type, number_available|
+              bills[bill_type] = 0
+            end
+
+            bills_available.each do |bill_type, number_available|
+              number_needed = (original_request / bill_type)
+              if number_available.zero?
+                bills[bill_type] = 0
+              elsif number_needed <= number_available
+                bills[bill_type] = number_needed
+                original_request -= (bill_type * number_needed)
+                left_over[bill_type] = (number_available - number_needed)
+              else
+                actual = number_available
+                bills[bill_type] = actual
+                original_request -= (bill_type * actual)
+                left_over[bill_type] = 0
+              end
+            end
+            session_hash[:bills] = bills
+            session_hash[:remainder] = original_request
+            session_hash[:left_over] = left_over
+            puts session_hash
     end
 end

@@ -15,8 +15,8 @@ class ApplicationController < ActionController::Base
     end
 
 
-      CONFIG = YAML.load(File.read("config/dispenser_config_test.yml")) unless defined?
-      (CONFIG)
+  CONFIG = YAML.load(File.read("config/dispenser_config.yml")) unless defined?
+  (CONFIG)
 
 
 
