@@ -13,11 +13,7 @@ class ApplicationController < ActionController::Base
     def admin_user
       redirect_to(root_url) unless current_user.admin?
     end
-
-
-  CONFIG = YAML.load(File.read("config/dispenser_config.yml")) unless defined?
-  (CONFIG)
-
-
+    config = YAML.load_file('config/dispenser_config.yml')
+    CASHSYMBOL = config["CASHSYMBOL"]
 
 end

@@ -35,7 +35,10 @@
       <% if @transaction.deposit %>
         Deposit
       <% else %>
-        Withdrawal
+        Withdrawal <br>
+        <% @transaction_hash[:bills].each do |bill_type, number_of| %>
+        <%= number_of %> of <%= bill_type %>  dollar bills <br>
+        <% end %>
       <% end %>
     </p>
 
