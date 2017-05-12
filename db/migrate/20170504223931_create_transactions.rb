@@ -6,6 +6,6 @@ class CreateTransactions < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_index :transactions, [:account_id, :created_at]
+    add_index :transactions, %i[account_id created_at]
   end
 end

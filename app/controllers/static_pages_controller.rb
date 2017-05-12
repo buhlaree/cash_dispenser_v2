@@ -1,8 +1,8 @@
 class StaticPagesController < ApplicationController
-  def home
-  end
-  def about
-  end
+  def home; end
+
+  def about; end
+
   def new_account
     if logged_in?
       @account = current_user.accounts.build
@@ -10,10 +10,10 @@ class StaticPagesController < ApplicationController
       redirect_to root_url
     end
   end
+
   private
 
-    def account_params
-      params.permit(:total, :id)
-    end
-
+  def account_params
+    params.permit(:total, :id)
+  end
 end

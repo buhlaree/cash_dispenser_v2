@@ -6,6 +6,6 @@ class CreateAccounts < ActiveRecord::Migration[5.0]
 
       t.timestamps
     end
-    add_index :accounts, [:user_id, :created_at]
+    add_index :accounts, %i[user_id created_at]
   end
 end
