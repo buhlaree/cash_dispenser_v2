@@ -10,7 +10,11 @@ class TransactionsController < ApplicationController
   def show
     @user = current_user
     @transaction = Transaction.find(params[:id])
+    if @transaction.deposit == false
       @transaction_hash = dispense(@transaction.amount.to_i)
+    else
+      @transaction_hash = {bills: 0} #Dummy hash value for view
+    end
 
   end
 
@@ -70,9 +74,11 @@ class TransactionsController < ApplicationController
     transaction_hash[:remainder] = original_request
     transaction_hash[:left_over] = left_over
     puts transaction_hash
-    config['bills'] = left_over
-    File.open('config/dispenser_config.yml', 'w') do |file|
-      YAML.dump(config, file)
+    if original_request == 0
+      config['bills'] = left_over
+      File.open('config/dispenser_config.yml', 'w') do |file|
+        YAML.dump(config, file)
+      end
     end
     transaction_hash
   end
