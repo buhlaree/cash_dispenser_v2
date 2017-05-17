@@ -5,6 +5,7 @@ class TransactionsController < ApplicationController
       ['Account Number ' + account.id.to_s + '  |  ' \
         "$#{account.total} available", account.id]
     end
+    pp @options
   end
 
   def show
@@ -13,9 +14,8 @@ class TransactionsController < ApplicationController
     if @transaction.deposit == false
       @transaction_hash = dispense(@transaction.amount.to_i)
     else
-      @transaction_hash = {bills: 0} #Dummy hash value for view
+      @transaction_hash = { bills: 0 } # Dummy hash value for view
     end
-
   end
 
   def create
