@@ -10,33 +10,46 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20_170_505_222_601) do
-  create_table 'accounts', force: :cascade do |t|
-    t.integer  'total'
-    t.integer  'user_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.index %w[user_id created_at], name: 'index_accounts_on_user_id_and_created_at'
-    t.index ['user_id'], name: 'index_accounts_on_user_id'
+ActiveRecord::Schema.define(version: 20170518013929) do
+
+  create_table "accounts", force: :cascade do |t|
+    t.integer  "total"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "created_at"], name: "index_accounts_on_user_id_and_created_at"
+    t.index ["user_id"], name: "index_accounts_on_user_id"
   end
 
-  create_table 'transactions', force: :cascade do |t|
-    t.text     'amount'
-    t.integer  'account_id'
-    t.datetime 'created_at', null: false
-    t.datetime 'updated_at', null: false
-    t.boolean  'deposit'
-    t.index %w[account_id created_at], name: 'index_transactions_on_account_id_and_created_at'
-    t.index ['account_id'], name: 'index_transactions_on_account_id'
+  create_table "dispensers", force: :cascade do |t|
+    t.integer  "100"
+    t.integer  "50"
+    t.integer  "20"
+    t.integer  "10"
+    t.integer  "5"
+    t.integer  "1"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  create_table 'users', force: :cascade do |t|
-    t.string   'name'
-    t.string   'email'
-    t.datetime 'created_at',                      null: false
-    t.datetime 'updated_at',                      null: false
-    t.string   'password_digest'
-    t.boolean  'admin', default: false
-    t.index ['email'], name: 'index_users_on_email', unique: true
+  create_table "transactions", force: :cascade do |t|
+    t.text     "amount"
+    t.integer  "account_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean  "deposit"
+    t.index ["account_id", "created_at"], name: "index_transactions_on_account_id_and_created_at"
+    t.index ["account_id"], name: "index_transactions_on_account_id"
   end
+
+  create_table "users", force: :cascade do |t|
+    t.string   "name"
+    t.string   "email"
+    t.datetime "created_at",                      null: false
+    t.datetime "updated_at",                      null: false
+    t.string   "password_digest"
+    t.boolean  "admin",           default: false
+    t.index ["email"], name: "index_users_on_email", unique: true
+  end
+
 end

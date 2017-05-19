@@ -1,0 +1,2 @@
+class Dispenser < ApplicationRecord
+end

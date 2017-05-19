@@ -38,7 +38,7 @@
         Withdrawal <br>
         <% @transaction_hash[:bills].each do |bill_type, number_of| %>
           <% if number_of != 0 %>
-            <%= number_of %> - <%= bill_type %>  dollar <%= pluralize(number_of, "bill") %> <br>
+            <%= number_of %> - <%= bill_type %>  dollar <%= "bill".pluralize(number_of) %> <br>
           <% end %>
         <% end %>
       <% end %>
