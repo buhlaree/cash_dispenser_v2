@@ -11,28 +11,31 @@ class TransactionsController < ApplicationController
     def show
       @user = current_user
       @transaction = Transaction.find(params[:id])
-      @transaction_hash = if @transaction.deposit
-        { bills: 0 } # Dummy hash value for view
+      @transaction_hash = if @transaction.amount.to_i > 1
+         { bills: 0 } # Dummy hash value for view
       else
-        dispense(@transaction.amount.to_i)
+        dispense(@transaction.amount.to_i.abs)
       end
     end
 
     def create
       Transaction.transaction do
-        @transaction = Transaction.create!(transaction_params)
-        if (@transaction.amount.to_i > @transaction.account.total.to_i) && !@transaction.deposit
-          flash[:danger] = 'Insufficient Funds'
-          redirect_to new_transaction_path
-        else
-          if @transaction.deposit
-            @transaction.account.update_attribute(:total,
-            @transaction.account.total.to_i + @transaction.amount.to_i)
-          else
-            @transaction.account.update_attribute(:total,
-            @transaction.account.total.to_i - @transaction.amount.to_i)
-
+        @dispenser = Dispenser.find(1)
+        @total_available = 0
+        @dispenser.attributes.to_options.each do |key, value|
+          unless key == :id || key == :created_at || key == :updated_at
+            @total_available += key.to_s.to_i * value
           end
+        end
+        @transaction = Transaction.create!(transaction_params)
+        if @transaction.amount.to_i + @transaction.account.total.to_i < 0
+          flash[:danger] = 'Insufficient Funds'
+          redirect_to new_transaction_path and return
+        elsif @total_available < @transaction.amount.to_i.abs
+          flash[:danger] = 'Not enough cash to dispense'
+          redirect_to root_url and return
+        else
+          @transaction.account.update_attribute(:total, @transaction.account.total.to_i + @transaction.amount.to_i)
           flash[:success] = 'Account Updated!'
         end
         redirect_to @transaction
@@ -42,7 +45,7 @@ class TransactionsController < ApplicationController
     private
 
     def transaction_params
-      params.require(:transaction).permit(:amount, :account_id, :deposit)
+      params.require(:transaction).permit(:amount, :account_id)
     end
 
     def dispense(original_request)
@@ -79,6 +82,13 @@ class TransactionsController < ApplicationController
       if original_request == 0
         @dispenser.update_attributes!(left_over)
       end
+      puts "--------------"
+      pp @dispenser.attributes.to_options
+      puts "--------------"
+      puts "**************"
+      pp transaction_hash
+      puts "**************"
+
       transaction_hash
     end
  end

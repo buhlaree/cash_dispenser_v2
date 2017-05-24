@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170518013929) do
+ActiveRecord::Schema.define(version: 20170524033549) do
 
   create_table "accounts", force: :cascade do |t|
     t.integer  "total"
@@ -37,7 +37,6 @@ ActiveRecord::Schema.define(version: 20170518013929) do
     t.integer  "account_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.boolean  "deposit"
     t.index ["account_id", "created_at"], name: "index_transactions_on_account_id_and_created_at"
     t.index ["account_id"], name: "index_transactions_on_account_id"
   end

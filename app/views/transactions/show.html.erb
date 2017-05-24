@@ -32,7 +32,7 @@
 
     <p>
       <strong>Type of Transaction:</strong>
-      <% if @transaction.deposit %>
+      <% if @transaction.amount.to_i >= 0 %>
         Deposit
       <% else %>
         Withdrawal <br>

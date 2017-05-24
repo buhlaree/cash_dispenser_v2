@@ -5,12 +5,12 @@
         <%= transaction_form.label :account_id %><br>
         <%= transaction_form.select :account_id, @options %>
 
-          <%= transaction_form.radio_button :deposit, true, :checked =>true %>
+          <!-- <%= transaction_form.radio_button :deposit, true, :checked =>true %>
           <%= transaction_form.label :deposit, "Deposit" %>
 
           <%= transaction_form.radio_button :deposit, false %>
-          <%= transaction_form.label :deposit, "Withdrawal" %><br>
-
+          <%= transaction_form.label :deposit, "Withdrawal" %><br> -->
+<br> Please input - in front of digits if transaction is a deposit </br>
         <%= transaction_form.label :amount %><br>
         <%= transaction_form.number_field :amount %>
         <%= transaction_form.submit "Complete Transaction"%>
